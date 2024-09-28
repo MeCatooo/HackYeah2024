@@ -16,34 +16,136 @@ class _SurveyScreenState extends State<SurveyScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   final List<Question> _questions = [
-    Question(
-      'Jak często korzystasz z prywatnego samochodu?',
-       [
-        'Codziennie',
-        'Kilka razy w tygodniu',
-        'Kilka razy w miesiącu',
-        'Rzadko lub nigdy'
-      ],
-    ),
-      Question('Czy korzystasz z komunikacji miejskiej?',
-      [
-        'Codziennie',
-        'Kilka razy w tygodniu',
-        'Kilka razy w miesiącu',
-        'Rzadko lub nigdy'
-      ],
-    ),
-    // {
-    //   'question': 'Jak często korzystasz z roweru lub chodzisz pieszo?',
-    //   'options': [
-    //     'Codziennie',
-    //     'Kilka razy w tygodniu',
-    //     'Kilka razy w miesiącu',
-    //     'Rzadko lub nigdy'
-    //   ],
-    // },
-  ];
-  final List<String> _answers = List.filled(3, '');
+  Question(
+    'Jak często korzystasz z samochodu na co dzień?',
+    [
+      'Nigdy, poruszam się pieszo lub rowerem',
+      'Raz w tygodniu',
+      'Kilka razy w tygodniu',
+      'Codziennie'
+    ],
+  ),
+  Question(
+    'Jakie jest Twoje główne źródło energii w domu?',
+    [
+      'Energia odnawialna',
+      'Energia elektryczna',
+      'Gaz ziemny',
+      'Węgiel, olej opałowy'
+    ],
+  ),
+  Question(
+    'Jak często podróżujesz samolotem w ciągu roku?',
+    [
+      'Nigdy',
+      'Raz w roku',
+      '2-3 razy w roku',
+      'Więcej niż 4 razy w roku'
+    ],
+  ),
+  Question(
+    'Jakie jest Twoje podejście do zakupu nowych ubrań?',
+    [
+      'Kupuję tylko rzeczy z drugiej ręki',
+      'Kupuję kilka razy w roku',
+      'Kupuję co miesiąc',
+      'Kupuję nowe ubrania co tydzień'
+    ],
+  ),
+  Question(
+    'Jak ogrzewasz swój dom/mieszkanie?',
+    [
+      'Nie ogrzewam – oszczędzam energię',
+      'Ogrzewanie gazowe',
+      'Ogrzewanie elektryczne',
+      'Ogrzewanie węglowe'
+    ],
+  ),
+  Question(
+    'Jak często jadasz mięso?',
+    [
+      'Nigdy (jestem weganinem)',
+      'Kilka razy w miesiącu',
+      'Kilka razy w tygodniu',
+      'Codziennie'
+    ],
+  ),
+  Question(
+    'Jakie jest Twoje główne środki transportu na co dzień?',
+    [
+      'Rower lub pieszo',
+      'Komunikacja publiczna',
+      'Skuter/motocykl',
+      'Samochód'
+    ],
+  ),
+  Question(
+    'Jakie produkty spożywcze najczęściej wybierasz?',
+    [
+      'Lokalne, produkty roślinne',
+      'Produkty roślinne',
+      'Lokalne produkty zwierzęce',
+      'Produkty pochodzenia zwierzęcego'
+    ],
+  ),
+  Question(
+    'Jak często korzystasz z transportu publicznego?',
+    [
+      'Codziennie',
+      'Kilka razy w tygodniu',
+      'Kilka razy w miesiącu',
+      'Rzadko lub nigdy'
+    ],
+  ),
+  Question(
+    'Jak często zmieniasz swoje urządzenia elektroniczne (np. telefon, komputer)?',
+    [
+      'Co 5 lat lub rzadziej',
+      'Co 3-4 lata',
+      'Co 2-3 lata',
+      'Co roku lub częściej'
+    ],
+  ),
+  Question(
+    'Jak zarządzasz odpadami?',
+    [
+      'Kompostuję i segreguję wszystko',
+      'Segreguję większość odpadów',
+      'Segreguję sporadycznie',
+      'Nie segreguję śmieci'
+    ],
+  ),
+  Question(
+    'Jakie produkty wybierasz do sprzątania?',
+    [
+      'Naturalne środki',
+      'Produkty ekologiczne',
+      'Zwykłe środki czystości w niewielkich ilościach',
+      'Zwykłe chemiczne środki czystości'
+    ],
+  ),
+  Question(
+    'Jak często korzystasz z jednorazowych produktów (np. plastikowych butelek)?',
+    [
+      'Nigdy, używam tylko wielokrotnego użytku',
+      'Kilka razy w roku',
+      'Kilka razy w miesiącu',
+      'Codziennie'
+    ],
+  ),
+  Question(
+    'Jakie jest Twoje podejście do recyklingu?',
+    [
+      'Recyklinguję wszystko, co tylko mogę',
+      'Recyklinguję większość rzeczy, ale nie zawsze',
+      'Rzadko recyklinguję',
+      'Nigdy nie recyklinguję'
+    ],
+  ),
+];
+
+  
+  final List<String> _answers = List.filled(14, '');
 
   @override
   Widget build(BuildContext context) {

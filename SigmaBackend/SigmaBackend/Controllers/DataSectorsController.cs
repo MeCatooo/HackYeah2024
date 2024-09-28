@@ -12,8 +12,8 @@ namespace SigmaBackend.Controllers
         public IActionResult PostAnkietaResults(params int[] userAnswers)
         {
 
-            double minScore = 6000;
-            double maxScore = 11000;
+            double minScore = 3500;
+            double maxScore = 9800;
 
 
             double score = CalculateScore(userAnswers);
@@ -30,16 +30,19 @@ namespace SigmaBackend.Controllers
             const int smallReduce = 3;
             const int matureReduce = 50;
             const int oldReduce = 25;
+            const int parksReducePerHa = 1300;
 
             var small = carbon / smallReduce;
             var mature = carbon / matureReduce;
             var old = carbon / oldReduce;
+            var parksHa = carbon / parksReducePerHa;
 
             return Ok(new
             {
                 small,
                 mature,
-                old
+                old,
+                parksHa
             });
         }
 
@@ -53,10 +56,7 @@ namespace SigmaBackend.Controllers
 
         private static double CalculateScore(int[] answers)
         {
-            if (answers.Length != 14)
-            {
-                throw new ArgumentException("Oczekiwano 14 odpowiedzi.");
-            }
+
             
             double totalScore = 0;
             foreach (var answer in answers)
@@ -69,12 +69,11 @@ namespace SigmaBackend.Controllers
 
         private static double CalculateMultiplier(double score, double minScore, double maxScore)
         {
-            double maxPossibleScore = 14 * 4; // Maksymalny możliwy wynik
-            double normalizedScore = score / maxPossibleScore; // Normalizacja wyniku (0-1)
+            double maxPossibleScore = 14 * 4; 
+            double normalizedScore = score / maxPossibleScore;
 
-            // Przeskaluj do przedziału 7000-11000
             double finalMultiplier = minScore + (normalizedScore * (maxScore - minScore));
-            return finalMultiplier / score; // Zwróć mnożnik
+            return finalMultiplier / score; 
         }
     }
 }

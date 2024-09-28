@@ -1,79 +1,88 @@
-// lib/features/home_screen/tabs/city_tab.dart
-
 import 'package:flutter/material.dart';
 import '../widgets/expandable_card.dart';
 
-class CityTab extends StatelessWidget {
+class CityTab extends StatefulWidget {
   const CityTab({Key? key}) : super(key: key);
+
+  @override
+  _CityTabState createState() => _CityTabState();
+}
+
+class _CityTabState extends State<CityTab> {
+  int? expandedIndex;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        ExpandableCard(
-          title: 'Usługi',
-          imageAsset: 'assets/images/city1.png',
-          expandedContent: _buildServicesContent(context),
-        ),
-        ExpandableCard(
-          title: 'Transport',
-          imageAsset: 'assets/images/city2.png',
-          expandedContent: _buildTransportContent(context),
-        ),
-        ExpandableCard(
-          title: 'Wydarzenia',
-          imageAsset: 'assets/images/city3.png',
-          expandedContent: _buildEventsContent(context),
-        ),
+        if (expandedIndex == null || expandedIndex == 0)
+          _buildExpandableCard(
+            'Transport',
+            'assets/images/city1.png',
+            'Środek transportu',
+            'gramy CO2/km',
+            transportData,
+            0,
+          ),
+        if (expandedIndex == null || expandedIndex == 1)
+          _buildExpandableCard(
+            'Usługi',
+            'assets/images/city2.png',
+            'Usługa',
+            'kilogramy CO2/dzień',
+            servicesData,
+            1,
+          ),
+        if (expandedIndex == null || expandedIndex == 2)
+          _buildExpandableCard(
+            'Wydarzenia',
+            'assets/images/city3.png',
+            'Wydarzenie',
+            'ton CO2',
+            eventsData,
+            2,
+          ),
       ],
     );
   }
 
-  Widget _buildServicesContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Informacje o emisji CO2 z sektora usług w Krakowie.',
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
-        ),
-        // Add more widgets specific to services data
-      ],
-    );
-  }
-
-  Widget _buildTransportContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Informacje o emisji CO2 związanej z transportem w Krakowie.',
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
-        ),
-        // Add more widgets specific to transport data
-      ],
-    );
-  }
-
-  Widget _buildEventsContent(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Dane o emisji CO2 podczas wydarzeń w Krakowie.',
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(color: Colors.white),
-        ),
-        // Add more widgets specific to events data
-      ],
+  Widget _buildExpandableCard(
+      String title,
+      String imageAsset,
+      String columnName,
+      String unitName,
+      List<Map<String, dynamic>> data,
+      int index) {
+    return ExpandableCard(
+      title: title,
+      imageAsset: imageAsset,
+      columnName: columnName,
+      unitName: unitName,
+      data: data,
+      onExpand: (isExpanded) {
+        setState(() {
+          expandedIndex = isExpanded ? index : null;
+        });
+      },
     );
   }
 }
+
+// Sample data
+final transportData = [
+  {'name': 'Samochód spalinowy', 'value': '150-300'},
+  {'name': 'Samochód elektryczny', 'value': '50-100'},
+  // Add more data
+];
+
+final servicesData = [
+  {'name': 'Restauracja Pod Wawelem', 'value': '100'},
+  {'name': 'Kawiarnia Wawel', 'value': '30-50'},
+  // Add more data
+];
+
+final eventsData = [
+  {'name': 'Krakowski Festiwal Filmowy', 'value': '10-15'},
+  {'name': 'Krakowskie Targi Książki', 'value': '5-10'},
+  // Add more data
+];

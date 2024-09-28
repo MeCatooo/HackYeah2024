@@ -1,49 +1,94 @@
+// lib/features/home_screen/presentation/home_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../survey/presentation/full_survey_screen.dart';
-import '../../survey/presentation/lite_survey_screen.dart';
+import '../../intro/presentation/intro_screen.dart';
+import '../../survey/presentation/survey_screen.dart';
+import '../widgets/custom_tab_bar.dart';
+import 'me_tab.dart';
+import 'city_tab.dart';
+import 'trees_tab.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  int _selectedIndex = 0;
+
+  static const List<Widget> _tabScreens = <Widget>[
+    MeTab(),
+    CityTab(),
+    TreesTab(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Kraków Carbon Footprint')),
-      body: Center(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const FullSurveyScreen())),
-              child: const Text('Pełna ankieta'),
+            Expanded(
+              child: _tabScreens.elementAt(_selectedIndex),
             ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const LiteSurveyScreen())),
-              child: const Text('Ankieta tygodniowa'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const CityDataScreen())),
-              child: const Text('Dane miasta'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const UserProfileScreen())),
-              child: const Text('Profil użytkownika'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const CarbonFootprintScreen())),
-              child: const Text('Twój ślad węglowy'),
+            CustomTabBar(
+              selectedIndex: _selectedIndex,
+              onTap: _onItemTapped,
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Debug Options', style: theme.textTheme.titleLarge),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const SurveyScreen()));
+                      },
+                      child: const Text('Ankieta'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const IntroScreen()));
+                      },
+                      child: const Text('Intro'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        backgroundColor: theme.primaryColor,
+        child: Icon(Icons.bug_report, color: theme.scaffoldBackgroundColor),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

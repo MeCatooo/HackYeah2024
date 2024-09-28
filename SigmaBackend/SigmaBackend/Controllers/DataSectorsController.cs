@@ -30,16 +30,19 @@ namespace SigmaBackend.Controllers
             const int smallReduce = 3;
             const int matureReduce = 50;
             const int oldReduce = 25;
+            const int parksReducePerHa = 1300;
 
             var small = carbon / smallReduce;
             var mature = carbon / matureReduce;
             var old = carbon / oldReduce;
+            var parksHa = carbon / parksReducePerHa;
 
             return Ok(new
             {
                 small,
                 mature,
-                old
+                old,
+                parksHa
             });
         }
 

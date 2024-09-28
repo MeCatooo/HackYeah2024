@@ -8,19 +8,6 @@ namespace SigmaBackend.Controllers
     [Route("api/[controller]")]
     public class DataSectorsController : Controller
     {
-
-        [HttpGet]
-        public IActionResult GetTreesEfficiency()
-        {
-            return Ok(new List<TreeEfficiencyResponse>()
-            {
-                new(1, 3),
-                new(25, 25),
-                new(50, 50),
-                new(100, 25)
-            });
-        }
-
         [HttpPost]
         public IActionResult PostAnkietaResults(params int[] userAnswers)
         {
@@ -37,32 +24,40 @@ namespace SigmaBackend.Controllers
             return Ok(resultt);
         }
 
+        [HttpGet]
+        public IActionResult TranslateToTrees(int carbon)
+        {
+            const int smallReduce = 3;
+            const int matureReduce = 50;
+            const int oldReduce = 25;
 
+            var small = carbon / smallReduce;
+            var mature = carbon / matureReduce;
+            var old = carbon / oldReduce;
+
+            return Ok(new
+            {
+                small,
+                mature,
+                old
+            });
+        }
 
         public record TreeEfficiencyResponse(int age, int carbonReduced);
 
-        public static int ResultNormaliser(double result)
+        private static int ResultNormaliser(double result)
         {
             int resultInt = (int)result;
-            //if (resultInt % 100 == 0) 
-            //{
-            //    Random random = new Random();
-            //    int randomValue = random.Next(0, 100); 
-            //    return (resultInt / 100) * 100 + randomValue; 
-
-            //}
             return resultInt;
         }
 
-        public static double CalculateScore(int[] answers)
+        private static double CalculateScore(int[] answers)
         {
-            // Sprawdź, czy liczba odpowiedzi jest zgodna z oczekiwaną
             if (answers.Length != 14)
             {
                 throw new ArgumentException("Oczekiwano 14 odpowiedzi.");
             }
-
-            // Oblicz całkowity wynik
+            
             double totalScore = 0;
             foreach (var answer in answers)
             {
@@ -72,7 +67,7 @@ namespace SigmaBackend.Controllers
             return totalScore;
         }
 
-        public static double CalculateMultiplier(double score, double minScore, double maxScore)
+        private static double CalculateMultiplier(double score, double minScore, double maxScore)
         {
             double maxPossibleScore = 14 * 4; // Maksymalny możliwy wynik
             double normalizedScore = score / maxPossibleScore; // Normalizacja wyniku (0-1)

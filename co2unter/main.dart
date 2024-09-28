@@ -1,7 +1,6 @@
+import 'package:co2unter/features/home_screen/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'lib/features/home_screen/presentation/home_screen.dart';
 
 void main() {
   runApp(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../common/widgets/wide_button.dart';
 import '../widgets/answer_bubble.dart';
 import '../widgets/progress_bar.dart';
+import 'package:collection/collection.dart';
 
 class SurveyScreen extends StatefulWidget {
   const SurveyScreen({Key? key}) : super(key: key);
@@ -33,17 +34,16 @@ class _SurveyScreenState extends State<SurveyScreen> {
         'Rzadko lub nigdy'
       ],
     ),
-    // {
-    //   'question': 'Jak często korzystasz z roweru lub chodzisz pieszo?',
-    //   'options': [
-    //     'Codziennie',
-    //     'Kilka razy w tygodniu',
-    //     'Kilka razy w miesiącu',
-    //     'Rzadko lub nigdy'
-    //   ],
-    // },
+      Question('Jak często korzystasz z roweru lub chodzisz pieszo?',
+       [
+        'Codziennie',
+        'Kilka razy w tygodniu',
+        'Kilka razy w miesiącu',
+        'Rzadko lub nigdy'
+      ],
+      ),
   ];
-  final List<String> _answers = List.filled(3, '');
+  final List<int> _answers = List.filled(3, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                       text: _currentPage == _questions.length - 1
                           ? 'Zakończ ankietę'
                           : 'Dalej',
-                      onPressed: _answers[_currentPage] != null
+                      onPressed: _answers[_currentPage] != 0
                           ? () {
                               if (_currentPage < _questions.length - 1) {
                                 _pageController.nextPage(
@@ -132,7 +132,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 ),
           ),
           const SizedBox(height: 20),
-          ...questionData[questionIndex].options.map<Widget>((option) {
+          ...questionData[questionIndex].options.mapIndexed<Widget>((i, option) {
             return Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -140,10 +140,10 @@ class _SurveyScreenState extends State<SurveyScreen> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: AnswerBubble(
                     text: option,
-                    isSelected: _answers[questionIndex] == option,
+                    isSelected: _answers[questionIndex] == i + 1,
                     onTap: () {
                       setState(() {
-                        _answers[questionIndex] = option;
+                        _answers[questionIndex] = i + 1;
                       });
                     },
                   ),

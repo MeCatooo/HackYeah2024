@@ -5,7 +5,7 @@ class AppTheme {
   static const Color primaryColor = Color(0xFF17723D);
   static const Color primaryDarkColor = Color(0xFF034F28);
   static const Color accentColor = Color(0xFF32DFA6);
-  static const Color secondaryColor = Color(0xFFAC4730);
+  static const Color secondaryColor = Color(0xFFdbfae8);
 
   static ThemeData get themeData {
     return ThemeData(
@@ -20,6 +20,7 @@ class AppTheme {
       colorScheme: ColorScheme.fromSwatch().copyWith(
         primary: primaryColor,
         secondary: accentColor,
+        tertiary: secondaryColor,
       ),
       buttonTheme: ButtonThemeData(
         buttonColor: primaryColor,

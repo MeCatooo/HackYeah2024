@@ -39,6 +39,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            const SizedBox(height: 10),
             Expanded(
               child: _tabScreens.elementAt(_selectedIndex),
             ),

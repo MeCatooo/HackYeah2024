@@ -1,4 +1,5 @@
 import 'package:co2unter/features/home_screen/presentation/home_screen.dart';
+import 'package:co2unter/features/survey/presentation/question.dart';
 import 'package:flutter/material.dart';
 import '../../../common/widgets/wide_button.dart';
 import '../widgets/answer_bubble.dart';
@@ -14,36 +15,35 @@ class SurveyScreen extends StatefulWidget {
 class _SurveyScreenState extends State<SurveyScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-  final List<Map<String, dynamic>> _questions = [
-    {
-      'question': 'Jak często korzystasz z prywatnego samochodu?',
-      'options': [
+  final List<Question> _questions = [
+    Question(
+      'Jak często korzystasz z prywatnego samochodu?',
+       [
         'Codziennie',
         'Kilka razy w tygodniu',
         'Kilka razy w miesiącu',
         'Rzadko lub nigdy'
       ],
-    },
-    {
-      'question': 'Czy korzystasz z komunikacji miejskiej?',
-      'options': [
+    ),
+      Question('Czy korzystasz z komunikacji miejskiej?',
+      [
         'Codziennie',
         'Kilka razy w tygodniu',
         'Kilka razy w miesiącu',
         'Rzadko lub nigdy'
       ],
-    },
-    {
-      'question': 'Jak często korzystasz z roweru lub chodzisz pieszo?',
-      'options': [
-        'Codziennie',
-        'Kilka razy w tygodniu',
-        'Kilka razy w miesiącu',
-        'Rzadko lub nigdy'
-      ],
-    },
+    ),
+    // {
+    //   'question': 'Jak często korzystasz z roweru lub chodzisz pieszo?',
+    //   'options': [
+    //     'Codziennie',
+    //     'Kilka razy w tygodniu',
+    //     'Kilka razy w miesiącu',
+    //     'Rzadko lub nigdy'
+    //   ],
+    // },
   ];
-  List<String?> _answers = List.filled(3, null);
+  final List<String> _answers = List.filled(3, '');
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                   });
                 },
                 itemBuilder: (context, index) {
-                  return _buildQuestionPage(_questions[index], index);
+                  return _buildQuestionPage(_questions, index);
                 },
               ),
             ),
@@ -111,7 +111,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
   }
 
   Widget _buildQuestionPage(
-      Map<String, dynamic> questionData, int questionIndex) {
+      List<Question> questionData, int questionIndex) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -126,13 +126,13 @@ class _SurveyScreenState extends State<SurveyScreen> {
           ),
           const SizedBox(height: 20),
           Text(
-            questionData['question'],
+            questionData[questionIndex].text,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
           const SizedBox(height: 20),
-          ...questionData['options'].map<Widget>((option) {
+          ...questionData[questionIndex].options.map<Widget>((option) {
             return Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -150,7 +150,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 ),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

@@ -1,16 +1,30 @@
-// me_tab.dart
 import 'package:flutter/material.dart';
 import '../../user_profile/widgets/tree_image.dart';
 
-class MeTab extends StatelessWidget {
+class MeTab extends StatefulWidget {
   const MeTab({Key? key}) : super(key: key);
+
+  @override
+  _MeTabState createState() => _MeTabState();
+}
+
+class _MeTabState extends State<MeTab> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isSecondImageVisible = false;
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Hard-coded percentage for now
-    const double carbonFootprintPercentage = 70.0;
+    const double carbonFootprintPercentage = 120;
 
     return SingleChildScrollView(
+      controller: _scrollController, // Attach the ScrollController
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -53,95 +67,104 @@ class MeTab extends StatelessWidget {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/images/tree_large.png'),
-                      width: 50,
-                      height: 50,
-                    ),
-                    Text('100-Letnie drzewa'),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: 0 != 0
-                          ? Text(
-                              'dużo drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            )
-                          : Text(
-                              'Liczba drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/images/tree_mid.png'),
-                      width: 50,
-                      height: 50,
-                    ),
-                    Text('Średnie drzewa'),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: 0 != 0
-                          ? Text(
-                              'dużo drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            )
-                          : Text(
-                              'Liczba drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image(
-                      image: AssetImage('assets/images/tree_small.png'),
-                      width: 50,
-                      height: 50,
-                    ),
-                    Text('Małe drzewa'),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: 0 != 0
-                          ? Text(
-                              'dużo drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            )
-                          : Text(
-                              'Liczba drzew',
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                    )
-                  ],
-                ),
+                _buildTreeColumn(
+                    'assets/images/tree_large.png', '100-Letnie drzewa', 0),
+                _buildTreeColumn(
+                    'assets/images/tree_mid.png', 'Średnie drzewa', 0),
+                _buildTreeColumn(
+                    'assets/images/tree_small.png', 'Małe drzewa', 0),
               ],
             )),
+            const SizedBox(height: 10),
+            Center(
+              child: IconButton(
+                onPressed: () {
+                  _scrollController.animateTo(
+                    _scrollController
+                        .position.maxScrollExtent, // Scroll to the bottom
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                icon: const Icon(Icons.keyboard_arrow_down, size: 48),
+              ),
+            ),
+            const Image(
+              image: AssetImage('assets/images/graphs.png'),
+              width: double.infinity,
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isSecondImageVisible = true;
+                });
+              },
+              child: Stack(
+                children: [
+                  Image(
+                    image: AssetImage(_isSecondImageVisible
+                        ? 'assets/images/card2.png'
+                        : 'assets/images/card.png'),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  if (_isSecondImageVisible)
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isSecondImageVisible = false;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.7),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.close, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  // Helper method to build tree columns
+  Widget _buildTreeColumn(String imagePath, String title, int count) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image(
+          image: AssetImage(imagePath),
+          height: 80,
+        ),
+        Text(title),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: count != 0
+              ? Text(
+                  'dużo drzew',
+                  style: Theme.of(context).textTheme.titleSmall,
+                )
+              : Text(
+                  'Liczba drzew',
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
+        )
+      ],
     );
   }
 }

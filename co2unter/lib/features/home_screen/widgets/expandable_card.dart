@@ -85,7 +85,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
           ),
           Image.asset(
             widget.imageAsset,
-            height: 180,
+            height: 170,
             fit: BoxFit.cover,
           ),
         ],

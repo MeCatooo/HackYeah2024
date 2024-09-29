@@ -11,7 +11,7 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Transport',
-          'assets/images/city2.png',
+          'assets/images/transport.png',
           'Środek transportu',
           'gramy CO2/km',
           transportData,
@@ -19,7 +19,7 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Usługi',
-          'assets/images/city3.png',
+          'assets/images/services.png',
           'Usługa',
           'kilogramy CO2/dzień',
           servicesData,
@@ -27,11 +27,15 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Wydarzenia',
-          'assets/images/city1.png',
+          'assets/images/events.png',
           'Wydarzenie',
           'ton CO2',
           eventsData,
         ),
+        _buildCard(context, 'Inicjatywy', 'assets/images/initiatives.png',
+            'Inicjatywa', '?', initiativesData),
+        _buildCard(
+            context, 'Parki', 'assets/images/parks.png', 'Park', '?', parksData)
       ],
     );
   }
@@ -57,8 +61,7 @@ class CityTab extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.tertiary,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 5)],
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Stack(
           children: [
@@ -142,5 +145,35 @@ final eventsData = [
     'value': '5-10',
     'additionalInfo':
         'Targi książki mają zwykle mniejszy wpływ na środowisko niż niektóre inne rodzaje wydarzeń, ale nadal generują emisję CO2.'
+  },
+];
+
+final initiativesData = [
+  {
+    'name': 'Kraków Bez Smogu',
+    'value': '?',
+    'additionalInfo':
+        'Inicjatywy takie jak Kraków Bez Smogu mają na celu poprawę jakości powietrza w mieście poprzez edukację i działania społeczne.'
+  },
+  {
+    'name': 'Kraków dla Rowerzystów',
+    'value': '?',
+    'additionalInfo':
+        'Inicjatywy promujące transport rowerowy mogą pomóc w zmniejszeniu emisji CO2 i poprawie jakości powietrza w mieście.'
+  },
+];
+
+final parksData = [
+  {
+    'name': 'Park Jordana',
+    'value': '?',
+    'additionalInfo':
+        'Parki miejskie są ważne dla jakości życia mieszkańców miasta i mogą pomóc w absorpcji CO2 oraz poprawie jakości powietrza.'
+  },
+  {
+    'name': 'Planty',
+    'value': '?',
+    'additionalInfo':
+        'Zielone obszary w mieście, takie jak Planty, są ważne dla zdrowia i środowiska, pomagając w absorpcji CO2 i poprawie jakości powietrza.'
   },
 ];

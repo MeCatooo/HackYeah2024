@@ -19,135 +19,114 @@ class _SurveyScreenState extends State<SurveyScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   final List<Question> _questions = [
-  Question(
-    'Jak często korzystasz z samochodu?',
-    [
-      'Nigdy',
-      'Raz w tygodniu',
-      'Kilka razy w tygodniu',
-      'Codziennie'
-    ],
-  ),
-  Question(
-    'Jakie jest główne źródło energii w domu?',
-    [
-      'Energia odnawialna',
-      'Energia elektryczna',
-      'Gaz ziemny',
-      'Węgiel, olej opałowy'
-    ],
-  ),
-  Question(
-    'Jak często podróżujesz samolotem?',
-    [
-      'Nigdy',
-      'Raz w roku',
-      '2-3 razy w roku',
-      'Więcej niż 4 razy w roku'
-    ],
-  ),
-  Question(
-    'Jakie jest Twoje podejście do zakupu ubrań?',
-    [
-      'Kupuję tylko z drugiej ręki',
-      'Kupuję kilka razy w roku',
-      'Kupuję co miesiąc',
-      'Kupuję nowe co tydzień'
-    ],
-  ),
-  Question(
-    'Jak ogrzewasz swój dom/mieszkanie?',
-    [
-      'Nie ogrzewam – oszczędzam energię',
-      'Ogrzewanie gazowe',
-      'Ogrzewanie elektryczne',
-      'Ogrzewanie węglowe'
-    ],
-  ),
-  Question(
-    'Jak często jadasz mięso?',
-    [
-      'Nigdy',
-      'Kilka razy w miesiącu',
-      'Kilka razy w tygodniu',
-      'Codziennie'
-    ],
-  ),
-  Question(
-    'Jakie są Twoje środki transportu?',
-    [
-      'Rower lub pieszo',
-      'Komunikacja publiczna',
-      'Skuter/motocykl',
-      'Samochód'
-    ],
-  ),
-  Question(
-    'Jakie produkty spożywcze najczęściej wybierasz?',
-    [
-      'Lokalne, produkty roślinne',
-      'Produkty roślinne',
-      'Lokalne produkty zwierzęce',
-      'Produkty pochodzenia zwierzęcego'
-    ],
-  ),
-  Question(
-    'Jak często korzystasz z transportu publicznego?',
-    [
-      'Codziennie',
-      'Kilka razy w tygodniu',
-      'Kilka razy w miesiącu',
-      'Rzadko lub nigdy'
-    ],
-  ),
-  Question(
-    'Jak często wymieniasz urządzenia elektroniczne?',
-    [
-      'Co 5 lat lub rzadziej',
-      'Co 3-4 lata',
-      'Co 2-3 lata',
-      'Co roku lub częściej'
-    ],
-  ),
-  Question(
-    'Jak zarządzasz odpadami?',
-    [
-      'Kompostuję i segreguję wszystko',
-      'Segreguję większość odpadów',
-      'Segreguję sporadycznie',
-      'Nie segreguję śmieci'
-    ],
-  ),
-  Question(
-    'Jakie produkty wybierasz do sprzątania?',
-    [
-      'Naturalne środki',
-      'Produkty ekologiczne',
-      'Środki czystości w niewielkich ilościach',
-      'Zwykłe chemiczne środki czystości'
-    ],
-  ),
-  Question(
-    'Jak często używasz jednorazowych produktów?',
-    [
-      'Nigdy',
-      'Kilka razy w roku',
-      'Kilka razy w miesiącu',
-      'Codziennie'
-    ],
-  ),
-  Question(
-    'Jakie jest Twoje podejście do recyklingu?',
-    [
-      'Recyklinguję wszystko, co tylko mogę',
-      'Recyklinguję większość rzeczy',
-      'Rzadko recyklinguję',
-      'Nigdy nie recyklinguję'
-    ],
-  ),
-];
+    Question(
+      'Jak często korzystasz z samochodu?',
+      ['Nigdy', 'Raz w tygodniu', 'Kilka razy w tygodniu', 'Codziennie'],
+    ),
+    Question(
+      'Jakie jest główne źródło energii w domu?',
+      [
+        'Energia odnawialna',
+        'Energia elektryczna',
+        'Gaz ziemny',
+        'Węgiel, olej opałowy'
+      ],
+    ),
+    Question(
+      'Jak często podróżujesz samolotem?',
+      ['Nigdy', 'Raz w roku', '2-3 razy w roku', 'Więcej niż 4 razy w roku'],
+    ),
+    Question(
+      'Jakie jest Twoje podejście do zakupu ubrań?',
+      [
+        'Kupuję tylko z drugiej ręki',
+        'Kupuję kilka razy w roku',
+        'Kupuję co miesiąc',
+        'Kupuję nowe co tydzień'
+      ],
+    ),
+    Question(
+      'Jak ogrzewasz swój dom/mieszkanie?',
+      [
+        'Nie ogrzewam – oszczędzam energię',
+        'Ogrzewanie gazowe',
+        'Ogrzewanie elektryczne',
+        'Ogrzewanie węglowe'
+      ],
+    ),
+    Question(
+      'Jak często jadasz mięso?',
+      ['Nigdy', 'Kilka razy w miesiącu', 'Kilka razy w tygodniu', 'Codziennie'],
+    ),
+    Question(
+      'Jakie są Twoje środki transportu?',
+      [
+        'Rower lub pieszo',
+        'Komunikacja publiczna',
+        'Skuter/motocykl',
+        'Samochód'
+      ],
+    ),
+    Question(
+      'Jakie produkty spożywcze najczęściej wybierasz?',
+      [
+        'Lokalne, produkty roślinne',
+        'Produkty roślinne',
+        'Lokalne produkty zwierzęce',
+        'Produkty pochodzenia zwierzęcego'
+      ],
+    ),
+    Question(
+      'Jak często korzystasz z transportu publicznego?',
+      [
+        'Codziennie',
+        'Kilka razy w tygodniu',
+        'Kilka razy w miesiącu',
+        'Rzadko lub nigdy'
+      ],
+    ),
+    Question(
+      'Jak często wymieniasz urządzenia elektroniczne?',
+      [
+        'Co 5 lat lub rzadziej',
+        'Co 3-4 lata',
+        'Co 2-3 lata',
+        'Co roku lub częściej'
+      ],
+    ),
+    Question(
+      'Jak zarządzasz odpadami?',
+      [
+        'Kompostuję i segreguję wszystko',
+        'Segreguję większość odpadów',
+        'Segreguję sporadycznie',
+        'Nie segreguję śmieci'
+      ],
+    ),
+    Question(
+      'Jakie produkty wybierasz do sprzątania?',
+      [
+        'Naturalne środki',
+        'Produkty ekologiczne',
+        'Środki czystości w niewielkich ilościach',
+        'Zwykłe chemiczne środki czystości'
+      ],
+    ),
+    Question(
+      'Jak często używasz jednorazowych produktów?',
+      ['Nigdy', 'Kilka razy w roku', 'Kilka razy w miesiącu', 'Codziennie'],
+    ),
+    Question(
+      'Jakie jest Twoje podejście do recyklingu?',
+      [
+        'Recyklinguję wszystko, co tylko mogę',
+        'Recyklinguję większość rzeczy',
+        'Rzadko recyklinguję',
+        'Nigdy nie recyklinguję'
+      ],
+    ),
+  ];
 
-  
   final List<int> _answers = List.filled(14, 0);
 
   @override
@@ -194,10 +173,15 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                   curve: Curves.easeInOut,
                                 );
                               } else {
-                                double aiContent = AiPoweratedGenerajtedPercentajel(AiPoweredAlgorithmWithAi(_answers));
-                                SharedPreferences.getInstance().then((x) async{
-                                  // await x.remove('results'); 
-                                  await x.setDouble('results', aiContent);});
+                                double cotons =
+                                    AiPoweredAlgorithmWithAi(_answers);
+                                double aiContent =
+                                    AiPoweratedGenerajtedPercentajel(cotons);
+
+                                SharedPreferences.getInstance().then((x) async {
+                                  await x.setDouble('karbon', cotons);
+                                  await x.setDouble('results', aiContent);
+                                });
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -219,8 +203,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     );
   }
 
-  Widget _buildQuestionPage(
-      List<Question> questionData, int questionIndex) {
+  Widget _buildQuestionPage(List<Question> questionData, int questionIndex) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -241,7 +224,9 @@ class _SurveyScreenState extends State<SurveyScreen> {
                 ),
           ),
           const SizedBox(height: 20),
-          ...questionData[questionIndex].options.mapIndexed<Widget>((i, option) {
+          ...questionData[questionIndex]
+              .options
+              .mapIndexed<Widget>((i, option) {
             return Center(
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.8,
@@ -284,13 +269,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
     );
   }
 
-  double AiPoweredAlgorithmWithAi(List<int> params){
+  double AiPoweredAlgorithmWithAi(List<int> params) {
     int minScore = 3500;
     int maxScore = 9800;
     int score = params.sum;
 
-
-    double maxPossibleScore = 14 * 4; 
+    double maxPossibleScore = 14 * 4;
     double normalizedScore = score / maxPossibleScore;
 
     double multiplier = minScore + (normalizedScore * (maxScore - minScore));
@@ -298,9 +282,10 @@ class _SurveyScreenState extends State<SurveyScreen> {
     return score * finalMultiplier;
   }
 
-  double AiPoweratedGenerajtedPercentajel(double score){
+  double AiPoweratedGenerajtedPercentajel(double score) {
     int averagePolak = 7100;
-    double result = double.parse((score / averagePolak).toStringAsFixed(2)) * 100;
-    return result; 
+    double result =
+        double.parse((score / averagePolak).toStringAsFixed(2)) * 100;
+    return result;
   }
 }

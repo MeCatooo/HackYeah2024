@@ -11,23 +11,21 @@ void main() async {
   bool introShown = prefs.getBool('intro_shown') ?? false;
 
   runApp(
-    ProviderScope(
-      child: MyApp(introShown: introShown),
+    const ProviderScope(
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final bool introShown;
-
-  const MyApp({Key? key, required this.introShown}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CO₂ w Krakowie',
       theme: AppTheme.themeData,
-      home: introShown ? const HomeScreen() : const IntroScreen(),
+      home: const IntroScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

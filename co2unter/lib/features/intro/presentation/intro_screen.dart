@@ -1,3 +1,4 @@
+import 'package:co2unter/features/survey/presentation/survey_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -113,10 +114,8 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void _finishIntro() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('intro_shown', true);
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const SurveyScreen()),
     );
   }
 }

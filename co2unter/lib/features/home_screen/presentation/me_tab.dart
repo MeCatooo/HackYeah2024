@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../survey/presentation/survey_screen.dart';
 import '../../user_profile/widgets/tree_image.dart';
 
 class MeTab extends StatefulWidget {
@@ -12,22 +13,34 @@ class MeTab extends StatefulWidget {
 class _MeTabState extends State<MeTab> {
   final ScrollController _scrollController = ScrollController();
   bool _isSecondImageVisible = false;
-  double carbonFootprintPercentage  = 0;
+  double carbonFootprintPercentage = 0;
+  double carbonKilograms = 0;
+  final double largeTreeAbsorption = 22.0;
+  final double mediumTreeAbsorption = 11.0;
+  final double smallTreeAbsorption = 5.0;
+
   @override
   void initState() {
     super.initState();
-    getState().then((x){
+    getState('results').then((x) {
       setState(() {
         carbonFootprintPercentage = x;
       });
     });
+
+    getState('karbon').then((x) {
+      setState(() {
+        carbonKilograms = x;
+      });
+    });
   }
 
-  Future<double> getState() async {
+  Future<double> getState(String name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var data = await prefs.getDouble('results');
+    var data = await prefs.getDouble(name);
     return data ?? 0;
   }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -39,15 +52,31 @@ class _MeTabState extends State<MeTab> {
     print(carbonFootprintPercentage);
 
     return SingleChildScrollView(
-      controller: _scrollController, // Attach the ScrollController
+      controller: _scrollController,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Twój ślad węglowy to około:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Twój ślad węglowy to około: \n${carbonKilograms.toString()} kg CO₂',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const SurveyScreen()),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.edit_note_outlined,
+                      size: 48,
+                    )),
+              ],
             ),
             const SizedBox(height: 20),
             const Center(
@@ -82,11 +111,13 @@ class _MeTabState extends State<MeTab> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildTreeColumn(
-                    'assets/images/tree_large.png', '100-Letnie drzewa', 0),
-                _buildTreeColumn(
-                    'assets/images/tree_mid.png', 'Średnie drzewa', 0),
-                _buildTreeColumn(
-                    'assets/images/tree_small.png', 'Małe drzewa', 0),
+                    'assets/images/tree_large.png',
+                    '100-Letnie drzewa',
+                    calculateTreeCount(largeTreeAbsorption)),
+                _buildTreeColumn('assets/images/tree_mid.png', 'Średnie drzewa',
+                    calculateTreeCount(mediumTreeAbsorption)),
+                _buildTreeColumn('assets/images/tree_small.png', 'Małe drzewa',
+                    calculateTreeCount(smallTreeAbsorption)),
               ],
             )),
             const SizedBox(height: 10),
@@ -94,8 +125,7 @@ class _MeTabState extends State<MeTab> {
               child: IconButton(
                 onPressed: () {
                   _scrollController.animateTo(
-                    _scrollController
-                        .position.maxScrollExtent, // Scroll to the bottom
+                    _scrollController.position.maxScrollExtent,
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
@@ -152,6 +182,10 @@ class _MeTabState extends State<MeTab> {
     );
   }
 
+  int calculateTreeCount(double absorption) {
+    return (carbonKilograms / absorption).ceil();
+  }
+
   // Helper method to build tree columns
   Widget _buildTreeColumn(String imagePath, String title, int count) {
     return Column(
@@ -168,15 +202,10 @@ class _MeTabState extends State<MeTab> {
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(20),
           ),
-          child: count != 0
-              ? Text(
-                  'dużo drzew',
-                  style: Theme.of(context).textTheme.titleSmall,
-                )
-              : Text(
-                  'Liczba drzew',
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+          child: Text(
+            count.toString(),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
         )
       ],
     );

@@ -50,46 +50,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Debug Options', style: theme.textTheme.titleLarge),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const SurveyScreen()));
-                      },
-                      child: const Text('Ankieta'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const IntroScreen()));
-                      },
-                      child: const Text('Intro'),
-                    ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-        backgroundColor: theme.primaryColor,
-        child: Icon(Icons.bug_report, color: theme.scaffoldBackgroundColor),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

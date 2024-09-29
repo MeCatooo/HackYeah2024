@@ -20,16 +20,16 @@ class _SurveyScreenState extends State<SurveyScreen> {
   int _currentPage = 0;
   final List<Question> _questions = [
   Question(
-    'Jak często korzystasz z samochodu na co dzień?',
+    'Jak często korzystasz z samochodu?',
     [
-      'Nigdy, poruszam się pieszo lub rowerem',
+      'Nigdy',
       'Raz w tygodniu',
       'Kilka razy w tygodniu',
       'Codziennie'
     ],
   ),
   Question(
-    'Jakie jest Twoje główne źródło energii w domu?',
+    'Jakie jest główne źródło energii w domu?',
     [
       'Energia odnawialna',
       'Energia elektryczna',
@@ -38,7 +38,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     ],
   ),
   Question(
-    'Jak często podróżujesz samolotem w ciągu roku?',
+    'Jak często podróżujesz samolotem?',
     [
       'Nigdy',
       'Raz w roku',
@@ -47,12 +47,12 @@ class _SurveyScreenState extends State<SurveyScreen> {
     ],
   ),
   Question(
-    'Jakie jest Twoje podejście do zakupu nowych ubrań?',
+    'Jakie jest Twoje podejście do zakupu ubrań?',
     [
-      'Kupuję tylko rzeczy z drugiej ręki',
+      'Kupuję tylko z drugiej ręki',
       'Kupuję kilka razy w roku',
       'Kupuję co miesiąc',
-      'Kupuję nowe ubrania co tydzień'
+      'Kupuję nowe co tydzień'
     ],
   ),
   Question(
@@ -67,14 +67,14 @@ class _SurveyScreenState extends State<SurveyScreen> {
   Question(
     'Jak często jadasz mięso?',
     [
-      'Nigdy (jestem weganinem)',
+      'Nigdy',
       'Kilka razy w miesiącu',
       'Kilka razy w tygodniu',
       'Codziennie'
     ],
   ),
   Question(
-    'Jakie jest Twoje główne środki transportu na co dzień?',
+    'Jakie są Twoje środki transportu?',
     [
       'Rower lub pieszo',
       'Komunikacja publiczna',
@@ -101,7 +101,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     ],
   ),
   Question(
-    'Jak często zmieniasz swoje urządzenia elektroniczne (np. telefon, komputer)?',
+    'Jak często wymieniasz urządzenia elektroniczne?',
     [
       'Co 5 lat lub rzadziej',
       'Co 3-4 lata',
@@ -123,14 +123,14 @@ class _SurveyScreenState extends State<SurveyScreen> {
     [
       'Naturalne środki',
       'Produkty ekologiczne',
-      'Zwykłe środki czystości w niewielkich ilościach',
+      'Środki czystości w niewielkich ilościach',
       'Zwykłe chemiczne środki czystości'
     ],
   ),
   Question(
-    'Jak często korzystasz z jednorazowych produktów (np. plastikowych butelek)?',
+    'Jak często używasz jednorazowych produktów?',
     [
-      'Nigdy, używam tylko wielokrotnego użytku',
+      'Nigdy',
       'Kilka razy w roku',
       'Kilka razy w miesiącu',
       'Codziennie'
@@ -140,7 +140,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     'Jakie jest Twoje podejście do recyklingu?',
     [
       'Recyklinguję wszystko, co tylko mogę',
-      'Recyklinguję większość rzeczy, ale nie zawsze',
+      'Recyklinguję większość rzeczy',
       'Rzadko recyklinguję',
       'Nigdy nie recyklinguję'
     ],

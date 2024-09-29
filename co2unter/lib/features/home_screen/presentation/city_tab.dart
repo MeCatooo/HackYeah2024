@@ -150,16 +150,10 @@ final eventsData = [
 
 final initiativesData = [
   {
-    'name': 'Kraków Bez Smogu',
-    'value': '?',
+    'name': 'Budowa S7',
+    'value': '54000',
     'additionalInfo':
-        'Inicjatywy takie jak Kraków Bez Smogu mają na celu poprawę jakości powietrza w mieście poprzez edukację i działania społeczne.'
-  },
-  {
-    'name': 'Kraków dla Rowerzystów',
-    'value': '?',
-    'additionalInfo':
-        'Inicjatywy promujące transport rowerowy mogą pomóc w zmniejszeniu emisji CO2 i poprawie jakości powietrza w mieście.'
+        'Budowa drogi S7 jest nie tylko ogromną inwestycją pieniężną ale również środowiskową.'
   },
 ];
 

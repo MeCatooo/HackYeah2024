@@ -19,6 +19,8 @@ dependencies:
   riverpod_annotation: any
   shared_preferences: ^2.3.2
   progress_state_button: ^1.0.4
+  collection: ^1.18.0
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

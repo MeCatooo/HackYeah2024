@@ -11,7 +11,7 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Transport',
-          'assets/images/city1.png',
+          'assets/images/city2.png',
           'Środek transportu',
           'gramy CO2/km',
           transportData,
@@ -19,7 +19,7 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Usługi',
-          'assets/images/city2.png',
+          'assets/images/city3.png',
           'Usługa',
           'kilogramy CO2/dzień',
           servicesData,
@@ -27,7 +27,7 @@ class CityTab extends StatelessWidget {
         _buildCard(
           context,
           'Wydarzenia',
-          'assets/images/city3.png',
+          'assets/images/city1.png',
           'Wydarzenie',
           'ton CO2',
           eventsData,

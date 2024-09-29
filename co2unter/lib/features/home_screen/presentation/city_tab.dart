@@ -33,7 +33,7 @@ class CityTab extends StatelessWidget {
           eventsData,
         ),
         _buildCard(context, 'Inicjatywy', 'assets/images/initiatives.png',
-            'Inicjatywa', '?', initiativesData),
+            'Inicjatywa', 'Tony CO2', initiativesData),
         _buildCard(
             context, 'Parki', 'assets/images/parks.png', 'Park', '?', parksData)
       ],

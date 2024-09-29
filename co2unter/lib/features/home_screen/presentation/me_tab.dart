@@ -8,7 +8,7 @@ class MeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Hard-coded percentage for now
-    const double carbonFootprintPercentage = 37.0;
+    const double carbonFootprintPercentage = 70.0;
 
     return SingleChildScrollView(
       child: Padding(

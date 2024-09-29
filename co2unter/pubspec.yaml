@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-#  flutter_svg_provider: any
   flutter_svg: any
   scrollable: any
   flutter_riverpod: any

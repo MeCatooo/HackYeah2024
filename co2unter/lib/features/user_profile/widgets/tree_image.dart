@@ -1,47 +1,63 @@
-import 'dart:typed_data';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
-import 'package:flutter/services.dart';
 
-class TreeImage extends StatelessWidget {
+class TreeImage extends StatefulWidget {
   final double percentage;
   final double width;
   final double height;
 
-  const TreeImage(
-      {Key? key, required this.percentage, this.width = 200, this.height = 200})
-      : super(key: key);
+  const TreeImage({
+    Key? key,
+    required this.percentage,
+    this.width = 200,
+    this.height = 200,
+  }) : super(key: key);
+
+  @override
+  _TreeImageState createState() => _TreeImageState();
+}
+
+class _TreeImageState extends State<TreeImage> {
+  ui.Image? _image;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImage();
+  }
+
+  Future<void> _loadImage() async {
+    final imageProvider = AssetImage('assets/images/main_tree.png');
+    final completer = Completer<ui.Image>();
+    imageProvider.resolve(ImageConfiguration()).addListener(
+      ImageStreamListener((ImageInfo info, bool _) {
+        completer.complete(info.image);
+      }),
+    );
+
+    _image = await completer.future;
+    setState(() {}); // Trigger a rebuild once the image is loaded
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_image == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return SizedBox(
-      width: width,
-      height: height,
-      child: FutureBuilder<ui.Image>(
-        future: _loadImage('assets/images/main_tree.png'),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return CustomPaint(
-              painter: TreePainter(
-                image: snapshot.data!,
-                percentage: percentage,
-              ),
-              size: Size(width, height),
-            );
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+      width: widget.width,
+      height: widget.height,
+      child: CustomPaint(
+        painter: TreePainter(
+          image: _image!,
+          percentage: widget.percentage,
+        ),
+        size: Size(widget.width, widget.height),
       ),
     );
-  }
-
-  Future<ui.Image> _loadImage(String assetPath) async {
-    final ByteData data = await rootBundle.load(assetPath);
-    final Uint8List bytes = data.buffer.asUint8List();
-    final ui.Codec codec = await ui.instantiateImageCodec(bytes);
-    final ui.FrameInfo fi = await codec.getNextFrame();
-    return fi.image;
   }
 }
 
@@ -103,24 +119,40 @@ class TreePainter extends CustomPainter {
     );
     canvas.restore();
 
-    // Apply color overlay
+    // Apply the color overlay based on percentage
     paint.colorFilter = null;
-    if (percentage <= 100) {
-      paint.color = Colors.green.withOpacity(0.5);
-    } else {
-      paint.color = Colors.red.withOpacity(0.5);
-    }
-    paint.blendMode = BlendMode.srcATop;
+    paint.blendMode = BlendMode.multiply;
 
-    final coloredHeight =
-        scaledSize.height * (percentage / 100).clamp(0.0, 1.0);
-    final coloredRect = Rect.fromLTWH(
+    // Create a path that matches the shape of the image
+    final Path overlayPath = Path();
+    overlayPath.addRect(
+      Rect.fromLTWH(
         centered.dx,
-        centered.dy + scaledSize.height - coloredHeight,
+        centered.dy +
+            scaledSize.height -
+            (scaledSize.height * (percentage / 100).clamp(0.0, 1.0)),
         scaledSize.width,
-        coloredHeight);
+        scaledSize.height * (percentage / 100).clamp(0.0, 1.0),
+      ),
+    );
 
-    canvas.drawRect(coloredRect, paint);
+    if (percentage <= 100) {
+      paint.color = Colors.green;
+    } else {
+      paint.color = Colors.red;
+    }
+
+    // Clip the overlay to the shape of the image to avoid drawing outside the bounds
+    canvas.save();
+    canvas.clipPath(overlayPath);
+    canvas.drawImageRect(
+      image,
+      Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+      Rect.fromLTWH(
+          centered.dx, centered.dy, scaledSize.width, scaledSize.height),
+      paint,
+    );
+    canvas.restore();
   }
 
   @override

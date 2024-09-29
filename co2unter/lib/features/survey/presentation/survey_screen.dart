@@ -1,6 +1,8 @@
 import 'package:co2unter/features/home_screen/presentation/home_screen.dart';
 import 'package:co2unter/features/survey/presentation/question.dart';
+import 'package:co2unter/features/user_profile/widgets/tree_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common/widgets/wide_button.dart';
 import '../widgets/answer_bubble.dart';
 import '../widgets/progress_bar.dart';
@@ -192,6 +194,10 @@ class _SurveyScreenState extends State<SurveyScreen> {
                                   curve: Curves.easeInOut,
                                 );
                               } else {
+                                double aiContent = AiPoweratedGenerajtedPercentajel(AiPoweredAlgorithmWithAi(_answers));
+                                SharedPreferences.getInstance().then((x) async{
+                                  // await x.remove('results'); 
+                                  await x.setDouble('results', aiContent);});
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -276,5 +282,25 @@ class _SurveyScreenState extends State<SurveyScreen> {
         );
       }),
     );
+  }
+
+  double AiPoweredAlgorithmWithAi(List<int> params){
+    int minScore = 3500;
+    int maxScore = 9800;
+    int score = params.sum;
+
+
+    double maxPossibleScore = 14 * 4; 
+    double normalizedScore = score / maxPossibleScore;
+
+    double multiplier = minScore + (normalizedScore * (maxScore - minScore));
+    double finalMultiplier = multiplier / score;
+    return score * finalMultiplier;
+  }
+
+  double AiPoweratedGenerajtedPercentajel(double score){
+    int averagePolak = 7100;
+    double result = double.parse((score / averagePolak).toStringAsFixed(2)) * 100;
+    return result; 
   }
 }

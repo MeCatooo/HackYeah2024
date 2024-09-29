@@ -1,14 +1,38 @@
 // me_tab.dart
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../user_profile/widgets/tree_image.dart';
 
-class MeTab extends StatelessWidget {
+class MeTab extends StatefulWidget {
   const MeTab({Key? key}) : super(key: key);
 
   @override
+  State<MeTab> createState() => _MeTabState();
+}
+
+class _MeTabState extends State<MeTab> {
+
+  double carbonFootprintPercentage  = 0;
+  @override
+  void initState() {
+    super.initState();
+    getState().then((x){
+      setState(() {
+        carbonFootprintPercentage = x;
+      });
+    });
+  }
+
+  Future<double> getState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = await prefs.getDouble('results');
+    return data ?? 0;
+  }
+
+
+  @override
   Widget build(BuildContext context) {
-    // Hard-coded percentage for now
-    const double carbonFootprintPercentage = 37.0;
+    print(carbonFootprintPercentage);
 
     return SingleChildScrollView(
       child: Padding(
@@ -23,7 +47,6 @@ class MeTab extends StatelessWidget {
             const SizedBox(height: 20),
             const Center(
               child: TreeImage(
-                percentage: carbonFootprintPercentage,
                 width: 300,
                 height: 300,
               ),

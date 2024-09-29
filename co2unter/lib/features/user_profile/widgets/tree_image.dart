@@ -2,21 +2,28 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class TreeImage extends StatelessWidget {
-  final double percentage;
+
+class TreeImage extends StatefulWidget {
+  final double percentage = 0;
   final double width;
   final double height;
 
   const TreeImage(
-      {Key? key, required this.percentage, this.width = 200, this.height = 200})
-      : super(key: key);
+      {super.key, this.width = 200, this.height = 200});
 
+  @override
+  State<TreeImage> createState() => _TreeImageState();
+}
+
+class _TreeImageState extends State<TreeImage> {
+  double opercentage = 0;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
-      height: height,
+      width: widget.width,
+      height: widget.height,
       child: FutureBuilder<ui.Image>(
         future: _loadImage('assets/images/main_tree.png'),
         builder: (context, snapshot) {
@@ -24,9 +31,9 @@ class TreeImage extends StatelessWidget {
             return CustomPaint(
               painter: TreePainter(
                 image: snapshot.data!,
-                percentage: percentage,
+                percentage: opercentage,
               ),
-              size: Size(width, height),
+              size: Size(widget.width, widget.height),
             );
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -42,6 +49,19 @@ class TreeImage extends StatelessWidget {
     final ui.Codec codec = await ui.instantiateImageCodec(bytes);
     final ui.FrameInfo fi = await codec.getNextFrame();
     return fi.image;
+  }
+  @override
+  void initState() {
+    super.initState();
+    getState().then((x){
+      opercentage = x;
+    });
+  }
+
+  Future<double> getState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var data = await prefs.getDouble('results');
+    return data ?? 0;
   }
 }
 
